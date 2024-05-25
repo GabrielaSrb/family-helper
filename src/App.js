@@ -1,8 +1,12 @@
-import React from 'react';
-import Main from './Main';
+import logo from './logo.svg';
+import './App.css';
 
 function App() {
-  return <Main />;
+  return (
+    <div className="App">
+     <h1>Test Amplify</h1> 
+    </div>
+  );
 }
 
 export default App;
