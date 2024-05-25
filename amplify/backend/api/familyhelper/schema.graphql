@@ -7,7 +7,7 @@ type List
   description: String
   imageKey: String
   slug: String!
-  listItems: [ListItem] @connection(name: "ListListItems")
+  listItems: [ListItem] @hasMany(indexName: "byList", fields: ["id"])
 }
 
 type ListItem
@@ -17,12 +17,14 @@ type ListItem
   title: String!
   quantity: Int
   done: Boolean
-  list: List @connection(name: "ListListItems")
-  actions: [Action] @connection(name: "ListItemAction")
+  listID: ID! @index(name: "byList", sortKeyFields: ["id"])
+  list: List @belongsTo(fields: ["listID"])
+  actions: [Action] @hasMany(indexName: "byListItem", fields: ["id"])
 }
 
 type Action @model @auth(rules: [{ allow: owner }]) {
   id: ID!
   action: String
-  listItem: ListItem @connection(name: "ListItemAction")
+  listItemID: ID! @index(name: "byListItem", sortKeyFields: ["id"])
+  listItem: ListItem @belongsTo(fields: ["listItemID"])
 }
